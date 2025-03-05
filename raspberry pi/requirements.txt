@@ -1,0 +1,21 @@
+# Atualizar o sistema
+sudo apt update
+sudo apt upgrade
+
+# Instalar dependências para o OpenCV e outras bibliotecas
+sudo apt install -y libopencv-dev python3-opencv libboost-all-dev libprotobuf-dev protobuf-compiler libopencv-core-dev libopencv-imgproc-dev libopencv-highgui-dev
+
+# Instalar pip para Python 3 (caso ainda não tenha)
+sudo apt install -y python3-pip
+
+# Instalar PyTorch (caso ainda não tenha)
+pip3 install torch torchvision
+
+# Instalar o ncnn Python bindings
+pip3 install ncnn
+
+# Instalar PiCamera2 (para usar o módulo de câmera do Raspberry Pi)
+pip3 install picamera2
+
+# Instalar numpy (necessário para o funcionamento de ncnn e outras operações)
+pip3 install numpy
