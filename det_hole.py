@@ -25,7 +25,7 @@ def draw_circles(frame, detections):
 
         cv2.circle(frame, center, radius, (0, 255, 0), 3, cv2.LINE_AA)
         cv2.putText(frame, label, (center[0] - radius, center[1] - radius - 10),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2, cv2.LINE_AA)
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.4, (255, 255, 255), 2, cv2.LINE_AA)
 
 # Real-time detection loop
 while True:
@@ -35,7 +35,7 @@ while True:
         break
 
     # Perform YOLO object detection
-    results = model(frame, conf=0.5, verbose=False)
+    results = model(frame, conf=0.75, verbose=False)
 
     detections = []  # Store detections as (x1, y1, x2, y2, label)
     detected_count = 0  # Counter
@@ -44,20 +44,23 @@ while True:
         x1, y1, x2, y2 = map(int, result.xyxy[0])  # Get box coordinates
         conf = float(result.conf[0])  # Get confidence score
 
-        if conf > 0.6:  # Confidence threshold
-            label = f"Hole {conf:.2f}"
+        if conf > 0.70:  # Confidence threshold
+            label = f"Hole {conf*100:.0f}"
             detections.append((x1, y1, x2, y2, label))
             detected_count += 1
+
+    # Filter detections for 'Hole' class
+    hole_detections = [detection for detection in detections if "Hole" in detection[4]]
+
+    # Display the count of hole detections
+    cv2.putText(frame, f"Total: {len(hole_detections)}", (20, 50),
+                cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
 
     # Draw circles on detections
     draw_circles(frame, detections)
 
-    # Display object count
-    cv2.putText(frame, f"Detected: {detected_count}", (20, 50),
-                cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
-
     # Show frame in high resolution
-    cv2.imshow("YOLOv11 Detection", frame)
+    cv2.imshow("Hole_Detection", frame)
 
     # Exit when 'q' is pressed
     if cv2.waitKey(1) & 0xFF == ord('q'):

@@ -1,7 +1,8 @@
+import argparse
+
 import cv2
 import numpy as np
 import tflite_runtime.interpreter as tflite
-import argparse
 from picamera2 import Picamera2, Preview
 
 # Argumentos da linha de comando

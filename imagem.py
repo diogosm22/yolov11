@@ -1,7 +1,8 @@
+import tkinter as tk
+from tkinter import filedialog
+
 import cv2
 from ultralytics import YOLO
-from tkinter import filedialog
-import tkinter as tk
 
 # Load YOLO model
 model = YOLO("C:/Users/diogo/Desktop/python/yolov11/modelo.pt")
