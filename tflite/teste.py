@@ -1,7 +1,8 @@
+import argparse
+
 import cv2
 import numpy as np
 import tensorflow.lite as tflite
-import argparse
 
 # Argumentos da linha de comando
 parser = argparse.ArgumentParser()
